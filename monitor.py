@@ -55,7 +55,13 @@ PUERTO = 9333
 CDP = f"http://localhost:{PUERTO}"
 
 URL_CATEGORIA = "https://www.pokemoncenter.com/category/tcg-cards"
+# mismo listado ordenado por fecha de lanzamiento: lo recién salido va arriba
+URL_NOVEDADES = URL_CATEGORIA + "?sort=launch_date%2Bdesc"
 MAX_PAGINAS = 30  # tope de seguridad; el recorrido para cuando no hay más
+
+# En modo vigilancia: cada cuánto el chequeo rápido y cada cuánto el completo
+SEG_RAPIDO = 60
+SEG_COMPLETO = 600
 
 EN_SERVIDOR = bool(os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"))
 
@@ -245,39 +251,74 @@ def bloqueado(html):
             or "Request unsuccessful" in html)
 
 
-def raspar_categoria(oculto=True):
-    """Recorre todas las páginas de la categoría y devuelve {sku: datos}."""
-    asegurar_chrome(oculto=oculto)
-    todos = {}
-    with sync_playwright() as p:
-        navegador = p.chromium.connect_over_cdp(CDP)
-        ctx = navegador.contexts[0] if navegador.contexts else navegador.new_context()
-        page = ctx.new_page()
-        try:
-            for n in range(1, MAX_PAGINAS + 1):
-                url = URL_CATEGORIA if n == 1 else f"{URL_CATEGORIA}?page={n}"
-                html = ""
-                for intento in range(3):
-                    page.goto(url, wait_until="domcontentloaded", timeout=90000)
-                    page.wait_for_timeout(6000)
-                    html = page.content()
-                    if bloqueado(html):
-                        log(f"  página {n}: bloqueo anti-bot, reintento {intento + 1}/3")
-                        page.wait_for_timeout(10000)
-                        continue
-                    break
-                else:
-                    raise RuntimeError("El anti-bot bloqueó los 3 intentos")
+class Sesion:
+    """Mantiene abierta una pestaña contra el Chrome con depuración remota.
 
-                pagina = productos_de_pagina(page, html)
-                nuevos = {k: v for k, v in pagina.items() if k not in todos}
-                log(f"  página {n}: {len(pagina)} productos ({len(nuevos)} no vistos aún)")
-                if not nuevos:
-                    break
-                todos.update(nuevos)
-        finally:
-            page.close()
-    return todos
+    Se reutiliza entre revisiones: arrancar Chrome y abrir pestaña cuesta
+    segundos que, en el modo vigilancia, se pagarían en cada ciclo.
+    """
+
+    def __init__(self, oculto=True):
+        self.oculto = oculto
+        self._pw = None
+        self.page = None
+
+    def __enter__(self):
+        asegurar_chrome(oculto=self.oculto)
+        self._pw = sync_playwright().start()
+        navegador = self._pw.chromium.connect_over_cdp(CDP)
+        ctx = navegador.contexts[0] if navegador.contexts else navegador.new_context()
+        self.page = ctx.new_page()
+        return self
+
+    def __exit__(self, *_):
+        try:
+            self.page.close()
+        except Exception:
+            pass
+        try:
+            self._pw.stop()
+        except Exception:
+            pass
+
+    def cargar(self, url, intentos=3):
+        """Abre una URL y devuelve su HTML, reintentando si el WAF bloquea."""
+        for i in range(intentos):
+            self.page.goto(url, wait_until="domcontentloaded", timeout=90000)
+            self.page.wait_for_timeout(6000)
+            html = self.page.content()
+            if not bloqueado(html):
+                return html
+            log(f"  bloqueo anti-bot, reintento {i + 1}/{intentos}")
+            self.page.wait_for_timeout(10000)
+        raise RuntimeError(f"El anti-bot bloqueó los {intentos} intentos en {url}")
+
+    def novedades(self):
+        """Primera página ordenada por fecha de lanzamiento: lo más nuevo arriba.
+
+        Cuesta ~7 s frente a los ~4 min del barrido completo, así que permite
+        vigilar productos nuevos casi en tiempo real.
+        """
+        html = self.cargar(URL_NOVEDADES)
+        return productos_de_pagina(self.page, html)
+
+    def barrido_completo(self):
+        """Recorre todas las páginas de la categoría y devuelve {sku: datos}."""
+        todos = {}
+        for n in range(1, MAX_PAGINAS + 1):
+            url = URL_CATEGORIA if n == 1 else f"{URL_CATEGORIA}?page={n}"
+            pagina = productos_de_pagina(self.page, self.cargar(url))
+
+            # Parar SOLO con una página vacía. Antes se paraba en cuanto una
+            # página no aportaba SKUs nuevos, y una carga defectuosa que
+            # repitiera resultados dejaba fuera todas las páginas siguientes.
+            if not pagina:
+                break
+
+            nuevos = {k: v for k, v in pagina.items() if k not in todos}
+            log(f"  página {n}: {len(pagina)} productos ({len(nuevos)} no vistos aún)")
+            todos.update(nuevos)
+        return todos
 
 
 # --------------------------------------------------------------------------
@@ -438,34 +479,33 @@ def main():
                   config)
         return
 
-    log("=== Revisando pokemoncenter.com/category/tcg-cards ===")
+def procesar(ahora, config, parcial=False):
+    """Compara lo leído contra el estado guardado, avisa y guarda.
+
+    `parcial=True` cuando solo se ha mirado la página de novedades: en ese caso
+    los productos ausentes no significan nada, solo se aporta lo visto.
+    """
     estado = cargar_estado()
     antes = estado.get("productos", {})
 
-    ahora = raspar_categoria(oculto="--ver-navegador" not in sys.argv)
-    if not ahora:
-        log("No se extrajo ningún producto — posible bloqueo o cambio del sitio. "
-            "Se conserva el estado anterior.")
-        sys.exit(2)
-    log(f"Total en la categoría: {len(ahora)} productos")
-
     if estado.get("primera_corrida"):
+        if parcial:
+            return False  # la línea base necesita el catálogo entero
         guardar_estado({"productos": ahora, "primera_corrida": False,
-                        "ultima_revision": datetime.now(timezone.utc).isoformat(timespec="seconds")})
+                        "ultima_revision": ahora_iso()})
         log(f"Primera corrida: línea base con {len(ahora)} productos guardada. "
             f"Desde la próxima revisión ya avisa de cambios.")
-        return
+        return False
 
     nuevos, restock, precios, agotados = comparar(
         antes, ahora, avisar_agotados=config.get("avisar_agotados", False))
 
-    if nuevos or restock or precios or agotados:
+    hubo_cambios = bool(nuevos or restock or precios or agotados)
+    if hubo_cambios:
         titulo, cuerpo, cuerpo_html = formatear(nuevos, restock, precios, agotados)
         log(titulo)
         log(cuerpo)
         notificar(titulo, cuerpo, cuerpo_html, config)
-    else:
-        log("Sin cambios.")
 
     # conserva los productos que desaparecieron de la categoría, para no
     # reportarlos como "nuevos" si el sitio los vuelve a listar
@@ -473,8 +513,116 @@ def main():
     fusionado.update(ahora)
     estado["productos"] = fusionado
     estado["primera_corrida"] = False
-    estado["ultima_revision"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    estado["ultima_revision"] = ahora_iso()
     guardar_estado(estado)
+    return hubo_cambios
+
+
+def ahora_iso():
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def revisar_una_vez(config, oculto=True):
+    log("=== Revisando pokemoncenter.com/category/tcg-cards ===")
+    with Sesion(oculto=oculto) as s:
+        ahora = s.barrido_completo()
+    if not ahora:
+        log("No se extrajo ningún producto — posible bloqueo o cambio del sitio. "
+            "Se conserva el estado anterior.")
+        sys.exit(2)
+    log(f"Total en la categoría: {len(ahora)} productos")
+    if not procesar(ahora, config):
+        log("Sin cambios.")
+
+
+def vigilar(config, minutos, oculto=True):
+    """Vigila en bucle durante `minutos`, sin dejar ventanas ciegas.
+
+    Alterna dos ritmos: la página de novedades cada minuto (barata, detecta
+    productos nuevos casi al instante) y el catálogo completo cada 10 minutos
+    (necesario para restock y cambios de precio, que pueden estar en cualquier
+    página).
+    """
+    fin = time.monotonic() + minutos * 60
+    proximo_completo = 0.0
+    ciclos = fallos = 0
+
+    log(f"=== Vigilancia continua durante {minutos} min "
+        f"(novedades cada {SEG_RAPIDO}s, catálogo completo cada {SEG_COMPLETO}s) ===")
+
+    with Sesion(oculto=oculto) as s:
+        while time.monotonic() < fin:
+            arranque = time.monotonic()
+            ciclos += 1
+            try:
+                if arranque >= proximo_completo:
+                    ahora = s.barrido_completo()
+                    proximo_completo = time.monotonic() + SEG_COMPLETO
+                    log(f"catálogo completo: {len(ahora)} productos")
+                    if ahora:
+                        procesar(ahora, config)
+                else:
+                    ahora = s.novedades()
+                    if ahora and procesar(ahora, config, parcial=True):
+                        log("cambios detectados en la página de novedades")
+                    elif ciclos % 10 == 0:
+                        log(f"vigilando… ciclo {ciclos}, sin novedades")
+                fallos = 0
+            except Exception as e:
+                fallos += 1
+                log(f"ciclo con error ({fallos} seguidos): {str(e)[:200]}")
+                if fallos >= 5:
+                    raise RuntimeError(
+                        f"5 ciclos seguidos fallando; el último: {e}") from e
+                time.sleep(30)
+
+            espera = SEG_RAPIDO - (time.monotonic() - arranque)
+            if espera > 0 and time.monotonic() + espera < fin:
+                time.sleep(espera)
+
+    log(f"Vigilancia terminada: {ciclos} ciclos.")
+
+
+def avisar_de_fallo(config, error):
+    """Un fallo no puede quedar en silencio: sin aviso parece 'sin novedades'."""
+    cuerpo = (f"El monitor falló y esta ronda no se ha revisado.\n\n{error}\n\n"
+              f"Si se repite, mira los registros de la última ejecución en GitHub.")
+    try:
+        notificar("Pokémon Center TCG: ⚠️ el monitor falló", cuerpo,
+                  f"<p>{cuerpo}</p>", config)
+    except Exception as e:
+        log(f"  además falló el aviso del fallo: {e}")
+
+
+def main():
+    config = cargar_config()
+    oculto = "--ver-navegador" not in sys.argv
+
+    if "--probar-avisos" in sys.argv:
+        log("Enviando aviso de prueba por todos los canales configurados…")
+        notificar("Pokémon Center TCG: prueba de avisos",
+                  "🆕 PRODUCTOS NUEVOS\n  • Ejemplo de producto\n    $59.99 · EN STOCK\n"
+                  "    https://www.pokemoncenter.com/category/tcg-cards",
+                  "<h3>🆕 Prueba</h3><ul><li>Si ves esto, el canal funciona.</li></ul>",
+                  config)
+        return
+
+    minutos = 0
+    if "--vigilar" in sys.argv:
+        i = sys.argv.index("--vigilar")
+        minutos = int(sys.argv[i + 1]) if len(sys.argv) > i + 1 else 55
+
+    try:
+        if minutos:
+            vigilar(config, minutos, oculto=oculto)
+        else:
+            revisar_una_vez(config, oculto=oculto)
+    except SystemExit:
+        raise
+    except Exception as e:
+        log(f"FALLO: {e}")
+        avisar_de_fallo(config, e)
+        raise
 
 
 if __name__ == "__main__":

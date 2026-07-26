@@ -2,9 +2,11 @@ name: Monitor Pokémon Center
 
 on:
   schedule:
-    # cada 15 minutos (el repo es público: minutos de Actions ilimitados).
-    # Ajusta la frecuencia aquí.
-    - cron: "*/15 * * * *"
+    # Cada hora arranca un turno de vigilancia que dura 55 minutos, así que la
+    # cobertura es prácticamente continua. Es más fiable que pedir un cron cada
+    # 15 min: los crons de GitHub se retrasan bastante en horas de carga, y ese
+    # retraso serían ventanas ciegas.
+    - cron: "0 * * * *"
   workflow_dispatch:        # botón para lanzarlo a mano
 
 # evita que dos revisiones se pisen al escribir estado.json
@@ -18,7 +20,7 @@ permissions:
 jobs:
   revisar:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 65
     steps:
       - uses: actions/checkout@v4
 
@@ -40,7 +42,7 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           EMAIL_DESTINO: ${{ secrets.EMAIL_DESTINO }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        run: python monitor.py
+        run: python monitor.py --vigilar 55
 
       - name: Guardar el estado
         if: always()
