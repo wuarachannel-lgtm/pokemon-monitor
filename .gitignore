@@ -1,0 +1,7 @@
+# credenciales: en el servidor van como GitHub Secrets, nunca en el repo
+config.json
+
+monitor.log
+launchd.log
+__pycache__/
+*.pyc

@@ -1,0 +1,22 @@
+{
+  "avisar_agotados": false,
+  "notificaciones": {
+    "macos": {
+      "activo": true,
+      "sonido": "Glass"
+    },
+    "telegram": {
+      "activo": true,
+      "token": "PEGA_AQUI_EL_TOKEN_DE_BOTFATHER",
+      "chat_id": "PEGA_AQUI_TU_CHAT_ID"
+    },
+    "email": {
+      "activo": true,
+      "usuario": "samugonzaleznoris@gmail.com",
+      "password_app": "PEGA_AQUI_LA_CONTRASENA_DE_APLICACION_DE_GMAIL",
+      "destino": "samugonzaleznoris@gmail.com",
+      "smtp": "smtp.gmail.com",
+      "puerto": 465
+    }
+  }
+}
