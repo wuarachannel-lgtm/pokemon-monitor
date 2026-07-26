@@ -1,0 +1,63 @@
+name: Monitor Pokémon Center
+
+on:
+  schedule:
+    # cada 15 minutos (el repo es público: minutos de Actions ilimitados).
+    # Ajusta la frecuencia aquí.
+    - cron: "*/15 * * * *"
+  workflow_dispatch:        # botón para lanzarlo a mano
+
+# evita que dos revisiones se pisen al escribir estado.json
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+permissions:
+  contents: write           # para guardar estado.json
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          pip install --quiet playwright
+          # el runner ya trae Google Chrome y xvfb; no hace falta bajar navegadores
+          google-chrome --version
+
+      - name: Revisar la categoría
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          EMAIL_DESTINO: ${{ secrets.EMAIL_DESTINO }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python monitor.py
+
+      - name: Guardar el estado
+        if: always()
+        run: |
+          git config user.name "pokemon-monitor"
+          git config user.email "actions@github.com"
+          git add estado.json
+          git diff --staged --quiet || git commit -m "estado: $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git pull --rebase --autostash origin ${{ github.ref_name }} || true
+          git push
+
+      - name: Guardar el registro si algo falla
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: registro
+          path: |
+            monitor.log
+            /tmp/chrome-pokemon.log
+          if-no-files-found: ignore
