@@ -835,7 +835,7 @@
   },
   "10-10447-111": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: 30th Celebration Pokémon Center Elite Trainer Box",
    "precio": 59.99,
@@ -843,7 +843,7 @@
   },
   "10-10449-121": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: 30th Celebration Tech Sticker Collection (Alolan Exeggutor)",
    "precio": 14.99,
@@ -851,7 +851,7 @@
   },
   "10-10449-122": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: 30th Celebration Tech Sticker Collection (Lucario)",
    "precio": 14.99,
@@ -875,7 +875,7 @@
   },
   "10-10667-101": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: 30th Celebration Knock Out Collection",
    "precio": 9.99,
@@ -4754,5 +4754,5 @@
    "url": "https://www.pokemoncenter.com/product/699-86981/pokemon-tcg-scarlet-and-violet-temporal-forces-booster-display-box-36-packs"
   }
  },
- "ultima_revision": "2026-07-28T22:13:59+00:00"
+ "ultima_revision": "2026-07-29T00:07:20+00:00"
 }
