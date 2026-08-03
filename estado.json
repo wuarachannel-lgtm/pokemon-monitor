@@ -859,7 +859,7 @@
   },
   "10-10451-115": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: 30th Celebration Booster Bundle (6 Packs)",
    "precio": 26.94,
@@ -867,7 +867,7 @@
   },
   "10-10465-176": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: 30th Celebration Mini Tins (10-Pack)",
    "precio": 99.09,
@@ -4754,5 +4754,5 @@
    "url": "https://www.pokemoncenter.com/product/699-86981/pokemon-tcg-scarlet-and-violet-temporal-forces-booster-display-box-36-packs"
   }
  },
- "ultima_revision": "2026-08-02T23:52:14+00:00"
+ "ultima_revision": "2026-08-03T00:12:10+00:00"
 }
