@@ -4752,7 +4752,55 @@
    "nombre": "Pokémon TCG: Scarlet & Violet-Temporal Forces Booster Display Box (36 Packs)",
    "precio": 161.14,
    "url": "https://www.pokemoncenter.com/product/699-86981/pokemon-tcg-scarlet-and-violet-temporal-forces-booster-display-box-36-packs"
+  },
+  "BUNDLE1191": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: Scarlet & Violet-Journey Together Booster Display Box & Accessories Bundle",
+   "precio": 195.99,
+   "url": "https://www.pokemoncenter.com/product/BUNDLE1191/pokemon-tcg-scarlet-and-violet-journey-together-booster-display-box-and-accessories-bundle"
+  },
+  "BUNDLE1192": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: Scarlet & Violet-Prismatic Evolutions Pokémon Center Elite Trainer Box, Card Sleeves & Eevee Figure Bundle",
+   "precio": 112.99,
+   "url": "https://www.pokemoncenter.com/product/BUNDLE1192/pokemon-tcg-scarlet-and-violet-prismatic-evolutions-pokemon-center-elite-trainer-box-card-sleeves-and-eevee-figure-bundle"
+  },
+  "BUNDLE1193": {
+   "disponible": true,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: Lucario VSTAR Premium Collection & 30th Playmat Bundle",
+   "precio": 62.99,
+   "url": "https://www.pokemoncenter.com/product/BUNDLE1193/pokemon-tcg-lucario-vstar-premium-collection-and-30th-playmat-bundle"
+  },
+  "BUNDLE1194": {
+   "disponible": true,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: Sword & Shield-Brilliant Stars Elite Trainer Box & Pokémon Legends: Arceus Poké Ball Replica Bundle",
+   "precio": 104.99,
+   "url": "https://www.pokemoncenter.com/product/BUNDLE1194/pokemon-tcg-sword-and-shield-brilliant-stars-elite-trainer-box-and-pokemon-legends-arceus-poke-ball-replica-bundle"
+  },
+  "BUNDLE1195": {
+   "disponible": true,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: Scarlet & Violet-Prismatic Evolutions Surprise Box & Binder Bundle",
+   "precio": 50.99,
+   "url": "https://www.pokemoncenter.com/product/BUNDLE1195/pokemon-tcg-scarlet-and-violet-prismatic-evolutions-surprise-box-and-binder-bundle"
+  },
+  "BUNDLE1196": {
+   "disponible": true,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: Scarlet & Violet-Destined Rivals Pokémon Center Elite Trainer Box & Premium Binder Bundle",
+   "precio": 97.99,
+   "url": "https://www.pokemoncenter.com/product/BUNDLE1196/pokemon-tcg-scarlet-and-violet-destined-rivals-pokemon-center-elite-trainer-box-and-premium-binder-bundle"
   }
  },
- "ultima_revision": "2026-08-17T15:28:39+00:00"
+ "ultima_revision": "2026-08-17T19:32:41+00:00"
 }
