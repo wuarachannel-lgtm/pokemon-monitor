@@ -4754,7 +4754,7 @@
    "url": "https://www.pokemoncenter.com/product/699-86981/pokemon-tcg-scarlet-and-violet-temporal-forces-booster-display-box-36-packs"
   },
   "BUNDLE1191": {
-   "disponible": false,
+   "disponible": true,
    "etiqueta_nuevo": true,
    "moneda": "USD",
    "nombre": "Pokémon TCG: Scarlet & Violet-Journey Together Booster Display Box & Accessories Bundle",
@@ -4762,7 +4762,7 @@
    "url": "https://www.pokemoncenter.com/product/BUNDLE1191/pokemon-tcg-scarlet-and-violet-journey-together-booster-display-box-and-accessories-bundle"
   },
   "BUNDLE1192": {
-   "disponible": false,
+   "disponible": true,
    "etiqueta_nuevo": true,
    "moneda": "USD",
    "nombre": "Pokémon TCG: Scarlet & Violet-Prismatic Evolutions Pokémon Center Elite Trainer Box, Card Sleeves & Eevee Figure Bundle",
@@ -4802,5 +4802,5 @@
    "url": "https://www.pokemoncenter.com/product/BUNDLE1196/pokemon-tcg-scarlet-and-violet-destined-rivals-pokemon-center-elite-trainer-box-and-premium-binder-bundle"
   }
  },
- "ultima_revision": "2026-08-18T09:30:51+00:00"
+ "ultima_revision": "2026-08-18T10:27:15+00:00"
 }
