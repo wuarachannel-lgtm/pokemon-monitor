@@ -833,6 +833,30 @@
    "precio": 161.64,
    "url": "https://www.pokemoncenter.com/product/10-10425-120/pokemon-tcg-mega-evolution-pitch-black-booster-display-box-36-packs"
   },
+  "10-10438-112": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: Mega Evolution-Delta Reign Pokémon Center Elite Trainer Box",
+   "precio": 59.99,
+   "url": "https://www.pokemoncenter.com/product/10-10438-112/pokemon-tcg-mega-evolution-delta-reign-pokemon-center-elite-trainer-box"
+  },
+  "10-10439-109": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: Mega Evolution-Delta Reign Booster Bundle (6 Packs)",
+   "precio": 26.94,
+   "url": "https://www.pokemoncenter.com/product/10-10439-109/pokemon-tcg-mega-evolution-delta-reign-booster-bundle-6-packs"
+  },
+  "10-10446-120": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: Mega Evolution-Delta Reign Booster Display Box (36 Packs)",
+   "precio": 161.64,
+   "url": "https://www.pokemoncenter.com/product/10-10446-120/pokemon-tcg-mega-evolution-delta-reign-booster-display-box-36-packs"
+  },
   "10-10447-111": {
    "disponible": false,
    "etiqueta_nuevo": false,
@@ -4802,5 +4826,5 @@
    "url": "https://www.pokemoncenter.com/product/BUNDLE1196/pokemon-tcg-scarlet-and-violet-destined-rivals-pokemon-center-elite-trainer-box-and-premium-binder-bundle"
   }
  },
- "ultima_revision": "2026-09-30T15:48:40+00:00"
+ "ultima_revision": "2026-09-30T21:29:10+00:00"
 }
