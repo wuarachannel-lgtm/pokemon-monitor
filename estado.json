@@ -835,7 +835,7 @@
   },
   "10-10438-112": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: Mega Evolution-Delta Reign Pokémon Center Elite Trainer Box",
    "precio": 59.99,
@@ -843,7 +843,7 @@
   },
   "10-10439-109": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: Mega Evolution-Delta Reign Booster Bundle (6 Packs)",
    "precio": 26.94,
@@ -851,7 +851,7 @@
   },
   "10-10446-120": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: Mega Evolution-Delta Reign Booster Display Box (36 Packs)",
    "precio": 161.64,
@@ -4826,5 +4826,5 @@
    "url": "https://www.pokemoncenter.com/product/BUNDLE1196/pokemon-tcg-scarlet-and-violet-destined-rivals-pokemon-center-elite-trainer-box-and-premium-binder-bundle"
   }
  },
- "ultima_revision": "2026-10-13T22:39:28+00:00"
+ "ultima_revision": "2026-10-14T01:48:33+00:00"
 }
