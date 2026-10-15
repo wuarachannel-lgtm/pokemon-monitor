@@ -889,6 +889,86 @@
    "precio": 26.94,
    "url": "https://www.pokemoncenter.com/product/10-10451-115/pokemon-tcg-30th-celebration-booster-bundle-6-packs"
   },
+  "10-10465-166": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Mew (Day)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-166/pokemon-tcg-30th-celebration-mini-tin-mew-day"
+  },
+  "10-10465-167": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Pikachu (Day)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-167/pokemon-tcg-30th-celebration-mini-tin-pikachu-day"
+  },
+  "10-10465-168": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Espeon (Day)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-168/pokemon-tcg-30th-celebration-mini-tin-espeon-day"
+  },
+  "10-10465-169": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Lapras (Day)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-169/pokemon-tcg-30th-celebration-mini-tin-lapras-day"
+  },
+  "10-10465-170": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Moltres (Day)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-170/pokemon-tcg-30th-celebration-mini-tin-moltres-day"
+  },
+  "10-10465-171": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Mewtwo (Night)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-171/pokemon-tcg-30th-celebration-mini-tin-mewtwo-night"
+  },
+  "10-10465-172": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Pikachu (Night)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-172/pokemon-tcg-30th-celebration-mini-tin-pikachu-night"
+  },
+  "10-10465-173": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Umbreon (Night)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-173/pokemon-tcg-30th-celebration-mini-tin-umbreon-night"
+  },
+  "10-10465-174": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Greninja (Night)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-174/pokemon-tcg-30th-celebration-mini-tin-greninja-night"
+  },
+  "10-10465-175": {
+   "disponible": false,
+   "etiqueta_nuevo": true,
+   "moneda": "USD",
+   "nombre": "Pokémon TCG: 30th Celebration Mini Tin – Zapdos (Night)",
+   "precio": 9.99,
+   "url": "https://www.pokemoncenter.com/product/10-10465-175/pokemon-tcg-30th-celebration-mini-tin-zapdos-night"
+  },
   "10-10465-176": {
    "disponible": false,
    "etiqueta_nuevo": false,
@@ -4826,5 +4906,5 @@
    "url": "https://www.pokemoncenter.com/product/BUNDLE1196/pokemon-tcg-scarlet-and-violet-destined-rivals-pokemon-center-elite-trainer-box-and-premium-binder-bundle"
   }
  },
- "ultima_revision": "2026-10-15T14:53:36+00:00"
+ "ultima_revision": "2026-10-15T22:52:05+00:00"
 }
