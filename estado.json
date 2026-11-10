@@ -979,7 +979,7 @@
   },
   "10-10467-109": {
    "disponible": false,
-   "etiqueta_nuevo": true,
+   "etiqueta_nuevo": false,
    "moneda": "USD",
    "nombre": "Pokémon TCG: 30th Celebration Poster Collection",
    "precio": 14.99,
@@ -4914,5 +4914,5 @@
    "url": "https://www.pokemoncenter.com/product/BUNDLE1196/pokemon-tcg-scarlet-and-violet-destined-rivals-pokemon-center-elite-trainer-box-and-premium-binder-bundle"
   }
  },
- "ultima_revision": "2026-11-09T21:03:15+00:00"
+ "ultima_revision": "2026-11-10T04:06:27+00:00"
 }
